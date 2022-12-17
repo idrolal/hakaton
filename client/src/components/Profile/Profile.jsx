@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Link, useAsyncError } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { fetchData } from '../../store/api/requestApi';
 
 function ProfilePage() {
