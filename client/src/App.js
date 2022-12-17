@@ -11,6 +11,7 @@ import React, { Component }  from 'react'
 
 import SingUp from './components/Layout/SingUp';
 import Login from './components/Layout/Login';
+import Game from './components/Game/Game';
 
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
     <Route path='/user/game' element={<ChoiceCharacter />} />
     <Route path='/signup' element={<SingUp />} />
     <Route path='/login' element={<Login />} />
+    <Route path='/game' element={<Game/>}/>
 
 
 </Routes>
