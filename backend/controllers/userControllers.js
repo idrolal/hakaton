@@ -53,8 +53,8 @@ async function refreshToken(req, res, next) {
 
 async function getUser(req, res, next){
   try {
-    let user = await User.Update({userName:req.body.data.userName},{
-      where: {id:req.body.data.id}
+    let user = await User.update({userName:req.body.userName},{
+      where: {id:req.body.id}
     });
     res.json(user.userName)
   } catch (error) {
