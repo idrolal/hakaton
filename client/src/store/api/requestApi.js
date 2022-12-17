@@ -30,7 +30,9 @@ export async function fetchData({
   const headers = {};
 
   headers['Content-Type'] = 'application/json';
-  headers["Access-Control-Allow-Origin"] = '*'
+  headers["Access-Control-Allow-Origin"] = '*';
+  headers["Access-Control-Allow-Credentials"] = true;
+  headers['Access-Control-Allow-Methods'] ='GET,PUT,POST,DELETE,PATCH,OPTIONS'
 
   // headers['Authorization'] = `Bearer ${localStorage.getItem('token')}`;
 
@@ -43,6 +45,5 @@ export async function fetchData({
     headers,
     params,
     withCredentials: true,
-    credentials: 'include'
   });
 }
