@@ -1,14 +1,19 @@
-import { SUCCESS_GET_ALL_USER } from "./user.type";
+import { SUCCESS_ADD_USER, REQUEST_ERROR } from "./user.type";
 
 const initialState = {
   user: {},
+  error: null
 };
 
 export const userReducer = (state = initialState, action) => {
   switch (action.type) {
-    case SUCCESS_GET_ALL_USER:
-    return { ...state, users: action.payload };
+    case REQUEST_ERROR:
+      return { ...state, error: action.payload };
 
+    case SUCCESS_ADD_USER:
+      return {
+        ...state, user: action.payload
+      }
     default:
       return state;
   }

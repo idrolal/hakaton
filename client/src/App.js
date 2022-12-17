@@ -6,7 +6,12 @@ import InfoPage from './components/InfoPage/InfoPage';
 import MainPage from './components/MainPage/MainPage';
 import ChoiceCharacter from './components/СhoiceCharacter/ChoiceCharacter';
 import { REQUEST_GET_ALL_USER } from './store/user/user.type';
+
 import React, { Component }  from 'react'
+
+import SingUp from './components/Layout/SingUp';
+import Login from './components/Layout/Login';
+
 
 function App() {
 
@@ -20,6 +25,10 @@ function App() {
     <Route path="/user/profile" element={<ProfilePage />} />
     <Route path='/info' element={<InfoPage />} />
     <Route path='/user/game' element={<ChoiceCharacter />} />
+    <Route path='/signup' element={<SingUp />} />
+    <Route path='/login' element={<Login />} />
+
+
 </Routes>
   );
 }

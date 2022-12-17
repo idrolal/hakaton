@@ -3,23 +3,29 @@ import React from 'react';
 import styled from 'styled-components';
 import { keyframes } from "styled-components";
 import monster from "../../images/monster.gif"
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { REQUEST_GET_ALL_USER } from '../../store/user/user.type';
 
 
 function MainPage() {
    const navigate = useNavigate()
 
-  const parentStyle = {
+   const parentStyle = {
     display: "flex",
   };
-  
 
   const childStyle = {
     flex: "1",
     margin: "90px"
   };
+ 
 
+  const dispatch = useDispatch();
+  useEffect(()=>{
+    dispatch({type: REQUEST_GET_ALL_USER})
+  }, [])
   return (
-
     <div className="App">
       <header className="App-header">
         <p>
@@ -30,24 +36,27 @@ function MainPage() {
         <img src={monster} alt="monster" width="600" height="600"/>
         </div>
         <div style={childStyle} >
+          <br/>
+          <div style={{backgroundColor:"w"}}>
           <p style={{"color":"#D29770","fontSize":"40px"}}
-          onClick={()=> navigate('/info')}> <AnimatedGradientText> Регистрация</AnimatedGradientText>
+          onClick={()=> navigate('/signup')}>
+          <AnimatedGradientText> Регистрация</AnimatedGradientText>
           </p>
+          </div>
+          <br/>
           <p style={{"color":"#D29770","fontSize":"40px" }}
-         onClick={()=> navigate('/')}><AnimatedGradientText> Вход </AnimatedGradientText> </p>
+          onClick={()=> navigate('/login')}><AnimatedGradientText> Вход</AnimatedGradientText>
+          </p>
+          <br/>
           <p style={{"color":"#D29770","fontSize":"40px"}}
-         onClick={()=> navigate('/info')}><AnimatedGradientText>Информация об игре</AnimatedGradientText> 
+          onClick={()=> navigate('/info')}><AnimatedGradientText> Информация об игре</AnimatedGradientText>
           </p>
         </div>
         </div>
       </header>
     </div>
-
-
-
   );
 }
-
 
 const hue = keyframes`
  from {
