@@ -1,5 +1,7 @@
+import { Routes, Route } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux'
+import ProfilePage from './components/Profile/Profile';
 import { REQUEST_GET_ALL_USER } from './store/user/user.type';
 
 function App() {
@@ -7,22 +9,12 @@ function App() {
   const dispatch = useDispatch();
   useEffect(()=>{
     dispatch({type: REQUEST_GET_ALL_USER})
-  }, [])
+  }, [dispatch])
   return (
     <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Routes>
+        <Route path="/user/profile" element={<ProfilePage />} />
+      </Routes>
     </div>
   );
 }
