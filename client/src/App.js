@@ -9,7 +9,7 @@ function App() {
   const dispatch = useDispatch();
   useEffect(()=>{
     dispatch({type: REQUEST_GET_ALL_USER})
-  }, [dispatch])
+  }, [])
   return (
     <div className="App">
       <Routes>
