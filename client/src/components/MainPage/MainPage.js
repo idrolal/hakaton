@@ -1,17 +1,79 @@
 import { useNavigate } from "react-router-dom";
+import React from 'react';
+import styled from 'styled-components';
+import { keyframes } from "styled-components";
+import monster from "../../images/monster.gif"
 
 
 function MainPage() {
    const navigate = useNavigate()
 
+  const parentStyle = {
+    display: "flex",
+  };
+  
+
+  const childStyle = {
+    flex: "1",
+    margin: "90px"
+  };
+
   return (
-    <div>
-      <h2>Welcome to the Game</h2>
-      <button type="button">Регистрация</button>
-      <button type="button">Вход</button>
-      <button type="button" onClick={()=> navigate('/info')}>Информация об игре</button>
+
+    <div className="App">
+      <header className="App-header">
+        <p>
+        <AnimatedGradientText>Welcome to the Game</AnimatedGradientText>
+        </p>
+      <div style={parentStyle}>
+        <div style={childStyle} >
+        <img src={monster} alt="monster" width="600" height="600"/>
+        </div>
+        <div style={childStyle} >
+          <p style={{"color":"#D29770","fontSize":"40px"}}
+          onClick={()=> navigate('/info')}> <AnimatedGradientText> Регистрация</AnimatedGradientText>
+          </p>
+          <p style={{"color":"#D29770","fontSize":"40px" }}
+         onClick={()=> navigate('/')}><AnimatedGradientText> Вход </AnimatedGradientText> </p>
+          <p style={{"color":"#D29770","fontSize":"40px"}}
+         onClick={()=> navigate('/info')}><AnimatedGradientText>Информация об игре</AnimatedGradientText> 
+          </p>
+        </div>
+        </div>
+      </header>
     </div>
+
+
+
   );
 }
+
+
+const hue = keyframes`
+ from {
+   -webkit-filter: hue-rotate(0deg);
+ }
+ to {
+   -webkit-filter: hue-rotate(-360deg);
+ }
+`;
+const AnimatedGradientText = styled.h1`
+  color: #f35626;
+  background-image: -webkit-linear-gradient(92deg, #f35626, #feab3a);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -webkit-animation: ${hue} 10s infinite linear;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial,
+    sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-feature-settings: "kern";
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 48px;
+  overflow-wrap: break-word;
+  text-align: center;
+  text-rendering: optimizelegibility;
+  -moz-osx-font-smoothing: grayscale;
+`;
+
 
 export default MainPage;

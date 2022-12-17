@@ -6,6 +6,7 @@ import InfoPage from './components/InfoPage/InfoPage';
 import MainPage from './components/MainPage/MainPage';
 import ChoiceCharacter from './components/СhoiceCharacter/ChoiceCharacter';
 import { REQUEST_GET_ALL_USER } from './store/user/user.type';
+import React, { Component }  from 'react'
 
 function App() {
 

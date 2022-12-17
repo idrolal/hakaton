@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { REQUEST_GET_ALL_CHARACTER } from "../../store/characters/character.type";
+import React, { Component }  from 'react'
 
 
 
