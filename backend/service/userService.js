@@ -1,45 +1,54 @@
+const { Op } = require("sequelize");
 const { User } = require('../db/models');
 const bcrypt = require('bcrypt');
 const tokenService = require('./tokenService')
 const ApiError = require('../exceptions/ApiError')
 
 function withoutPassword(user) {
-  const copyUser = {...user};
+  const copyUser = { ...user };
   delete copyUser.password
   return copyUser
 }
-async function registration({ email, password }) {
+async function registration({ email, password, userName }) {
+
+  const isFindLogin = await User.findOne({ where: { userName } });
+  if (isFindLogin) {
+    throw ApiError.BadRequest(`Имя пользователя ${userName} занято`);
+  }
   const isFindUser = await User.findOne({ where: { email } });
-    if (isFindUser) {
-      throw ApiError.BadRequest(`Пользователь с почтовым адресом ${email} уже существует!`);
-    }
-    const hashPassword = await bcrypt.hash(password, 10)
-    const newUser = await User.create({
-      email,
-      password: hashPassword
-    },
-    )
-    const userDto = withoutPassword(newUser)
-    const tokens = tokenService.generateToken(newUser);
+  if (isFindUser) {
+    throw ApiError.BadRequest(`Пользователь с почтовым адресом ${email} уже существует!`);
+  }
+  const hashPassword = await bcrypt.hash(password, 10)
+  const newUser = await User.create({
+    email,
+    password: hashPassword,
+    userName
+  },{
+    raw: true
+  }
+  )
+  const userDto = withoutPassword(newUser.dataValues)
+  const tokens = tokenService.generateToken(newUser);
 
-    await tokenService.saveToken(newUser.id, tokens.refreshToken);
+  await tokenService.saveToken(newUser.id, tokens.refreshToken);
 
-    return {
-      ...tokens,
-      user: userDto
-    }
+  return {
+    ...tokens,
+    user: userDto
+  }
 
 };
 
 async function login({ password, email }) {
   const user = await User.findOne({
     where: {
-      email
+      [Op.or]: [{ email }, { userName: email }]
     },
     raw: true
   })
   if (!user) {
-    throw ApiError.BadRequest(`Пользователь ${email} не найден!`)
+    throw ApiError.BadRequest(`Пользователь не найден!`)
   }
 
   const isPassEquals = await bcrypt.compare(password, user.password)
@@ -70,7 +79,7 @@ async function refresh(refreshToken) {
   }
   const userData = tokenService.validateRefreshToken(refreshToken);
   const tokenFromDb = await tokenService.findToken(refreshToken);
-  
+
   if (!userData || !tokenFromDb) {
     throw ApiError.UnauthorizedError();
   }
