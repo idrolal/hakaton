@@ -20,10 +20,9 @@ axios.interceptors.request.use((config) => {
 
 export async function fetchData({
   url,
-  method,
+  method = 'GET',
   data,
   params,
-  auth = true,
   baseURL = process.env.REACT_APP_URL_API
 }) {
   if (!url) return;
@@ -31,10 +30,9 @@ export async function fetchData({
   const headers = {};
 
   headers['Content-Type'] = 'application/json';
+  headers["Access-Control-Allow-Origin"] = '*'
 
-  if (auth && localStorage.getItem('token')) {
-    headers['Authorization'] = `Bearer ${localStorage.getItem('token')}`;
-  }
+  // headers['Authorization'] = `Bearer ${localStorage.getItem('token')}`;
 
 
   return await axios({
@@ -43,6 +41,8 @@ export async function fetchData({
     url,
     data,
     headers,
-    params
+    params,
+    withCredentials: true,
+    credentials: 'include'
   });
 }
