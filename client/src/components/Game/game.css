@@ -1,0 +1,7 @@
+#game_contaner {
+  margin: 20px auto;
+  width: 600px;
+  height: 500px;
+  border: 2px solid black;
+  background: url('./kosmos.jpg') 0 0 repeat;
+}
