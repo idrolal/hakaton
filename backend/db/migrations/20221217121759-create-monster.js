@@ -15,22 +15,27 @@ module.exports = {
       },
       health: {
         allowNull: false,
+        defaultValue: 10,
         type: Sequelize.INTEGER
       },
       power: {
         allowNull: false,
+        defaultValue: 10,
         type: Sequelize.INTEGER
       },
       speed: {
         allowNull: false,
+        defaultValue: 10,
         type: Sequelize.INTEGER
       },
       score: {
         allowNull: false,
+        defaultValue: 10,
         type: Sequelize.INTEGER
       },
       role: {
         allowNull: false,
+        defaultValue: 'mob',
         type: Sequelize.TEXT
       },
       image: {

@@ -21,14 +21,15 @@ function validateRefreshToken(token) {
 
 
 function generateToken(user) {
-  const { id, email, role } = user;
+  const { id, email, userName } = user;
   try {
-    const accessToken = jwt.sign({ id, email }, process.env.JWT_ACCESS_TOKEN, {
+    const accessToken = jwt.sign({ id, email, userName }, process.env.JWT_ACCESS_TOKEN, {
       expiresIn: '30m'
     })
-    const refreshToken = jwt.sign({ id, email }, process.env.JWT_REFRESH_TOKEN, {
+    const refreshToken = jwt.sign({ id, email, userName }, process.env.JWT_REFRESH_TOKEN, {
       expiresIn: '30d'
     })
+    console.log(accessToken)
     return {
       accessToken,
       refreshToken
@@ -39,14 +40,14 @@ function generateToken(user) {
 
 }
 
-async function saveToken(user_id, refreshToken) {
-  const tokenData = await Token.findOne({ where: user_id });
+async function saveToken(userId, refreshToken) {
+  const tokenData = await Token.findOne({ where: { userId } });
   if (tokenData) {
     tokenData.refreshToken = refreshToken;
-    return await refreshToken.save();
+    return await tokenData.save();
   }
   const token = await Token.create({
-    user_id,
+    userId,
     refreshToken
   });
   return token;
