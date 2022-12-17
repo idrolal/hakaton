@@ -13,7 +13,9 @@ router.post('/login', userController.login);
 router.post('/logout', userController.logout);
 router.get('/refresh', userController.refreshToken);
 router.get('/',  userController.getUser);
+router.get('/game', userController.getCharacter);
 router.put('/update', userController.updateUser)
+
 
 
 module.exports = router;

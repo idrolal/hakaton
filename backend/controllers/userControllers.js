@@ -1,6 +1,6 @@
 const userService = require('../service/userService');
 const { validationResult } = require('express-validator');
-const { User } = require('../db/models');
+const { User, Character, Role } = require('../db/models');
 
 const ApiError = require('../exceptions/ApiError')
 
@@ -75,11 +75,33 @@ async function updateUser(req, res, next){
   }
 }
 
+async function getCharacter(req, res){
+  try {
+    let characters = await Character.findAll({
+     include: {model: Role, 
+       attributes: {
+        exclude: ['createdAt', "updatedAt"],
+      },},
+     attributes: {
+        exclude: ['createdAt', "updatedAt"],
+      },
+      raw: true
+    });
+    console.log(characters);
+    res.json(characters)
+  } catch (error) {
+    console.log(error.message);
+  }
+}
+
 module.exports = {
   registration,
   login,
   logout,
   refreshToken,
   getUser,
+  getCharacter,
   updateUser
 }
+
+
