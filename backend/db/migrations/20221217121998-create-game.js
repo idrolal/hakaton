@@ -31,14 +31,6 @@ module.exports = {
           key: 'id',
         },
       },
-      characterId: {
-        allowNull: false,
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'Characters',
-          key: 'id',
-        },
-      },
       lastLevel: {
         allowNull: true,
         type: Sequelize.INTEGER

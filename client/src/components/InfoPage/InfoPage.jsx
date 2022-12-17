@@ -29,8 +29,6 @@ function InfoPage() {
       <p style={{"color":"white","fontSize":"35px","margin":"20px"}}>
       <br/>Окунись в атмосферу инопланетных монстров.
       <br/>Победи всех врагов, спаси свою планету от чужеземцев.
-      <br/>
-      <br/><p style={{"color":"#D29770", "margin":"30px"}}>FAQ</p>
       </p>  
 </div>
       </div>

@@ -33,6 +33,14 @@ module.exports = {
         allowNull: false,
         type: Sequelize.INTEGER
       },
+        characterId: {
+        allowNull: true,
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Characters',
+          key: 'id',
+        },
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

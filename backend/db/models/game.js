@@ -9,10 +9,12 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate({ User, Character, Level }) {
-      Game.belongsTo(User, { foreignKey: 'userId' });
-      Game.hasOne(Character, { foreignKey: 'characterId' });
-      Game.hasMany(Level, { foreignKey: 'levelId' });
+
+    static associate({User, Character, Level}) {
+      Game.belongsTo(User, {foreignKey: 'userId'});
+      Game.hasOne(Character, {foreignKey: 'gameId'});
+      Game.hasMany(Level, {foreignKey: 'levelId'});
+
     }
   }
   Game.init({
@@ -38,18 +40,8 @@ module.exports = (sequelize, DataTypes) => {
         key: 'id',
       },
     },
-    characterId: {
-      allowNull: false,
-      type: DataTypes.INTEGER,
-      references: {
-        model: 'Characters',
-        key: 'id',
-      },
-    },
-    lastLevel: {
-      allowNull: true,
-      type: DataTypes.INTEGER
-    },
+    lastLevel: DataTypes.INTEGER
+
   }, {
     sequelize,
     modelName: 'Game',

@@ -13,17 +13,17 @@ module.exports = {
         allowNull: false,
         type: Sequelize.TEXT
       },
-      roleId: {
-        allowNull: false,
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'Roles',
-          key: 'id',
-        },
-      },
       level: {
         allowNull: false,
         type: Sequelize.INTEGER
+      },
+       gameId: {
+        allowNull: true,
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Games',
+          key: 'id',
+        },
       },
       createdAt: {
         allowNull: false,
