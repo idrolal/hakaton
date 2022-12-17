@@ -7,10 +7,10 @@ import { REQUEST_GET_ALL_CHARACTER } from "../../store/characters/character.type
 function ChoiceCharacter() {
 const dispatch = useDispatch();
 const { characters } = useSelector((state) => state.characters)
-
-   useEffect(()=> {
-      dispatch({type: REQUEST_GET_ALL_CHARACTER})
-   })
+// console.log(characters);
+  useEffect(()=>{
+    dispatch({type: REQUEST_GET_ALL_CHARACTER})
+  }, [])
 
   return (
     <div>

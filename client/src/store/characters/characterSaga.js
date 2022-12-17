@@ -10,7 +10,7 @@ function* getAllCharacter({ payload }) {
     const { data } = yield call(fetchData, {
       url: GET_CHARACTER,
     })
-
+    console.log(data);
     yield put(successGetAllCharacter(data))
   } catch (error) {
     console.log(error)

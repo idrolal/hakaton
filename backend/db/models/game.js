@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate({User, Character, Level}) {
       Game.belongsTo(User, {foreignKey: 'userId'});
-      Game.hasOne(Character, {foreignKey: 'characterId'});
+      Game.hasOne(Character, {foreignKey: 'gameId'});
       Game.hasMany(Level, {foreignKey: 'levelId'});
     }
   }
@@ -28,13 +28,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       references: {
         model: 'Users',
-        key: 'id',
-      },
-    },
-    characterId: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: 'Characters',
         key: 'id',
       },
     },
