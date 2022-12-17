@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Routes, Route } from 'react-router-dom';
+import ProfilePage from './components/Profile/Profile';
 import InfoPage from './components/InfoPage/InfoPage';
 import MainPage from './components/MainPage/MainPage';
 import ChoiceCharacter from './components/СhoiceCharacter/ChoiceCharacter';
@@ -15,6 +16,7 @@ function App() {
   return (
   <Routes>
     <Route path='/' element={<MainPage />} />
+    <Route path="/user/profile" element={<ProfilePage />} />
     <Route path='/info' element={<InfoPage />} />
     <Route path='/user/game' element={<ChoiceCharacter />} />
 </Routes>
