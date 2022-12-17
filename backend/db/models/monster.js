@@ -4,23 +4,44 @@ const {
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Monster extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate({Level}) {
       Monster.belongsTo(Level, {foreignKey: 'monsterId'});
     }
   }
   Monster.init({
-    name: DataTypes.TEXT,
-    health: DataTypes.INTEGER,
-    power: DataTypes.INTEGER,
-    speed: DataTypes.INTEGER,
-    score: DataTypes.INTEGER,
-    role: DataTypes.TEXT,
-    image: DataTypes.TEXT
+    name: {
+      allowNull: false,
+      type: DataTypes.TEXT
+    },
+    health: {
+      allowNull: false,
+      defaultValue: 10,
+      type: DataTypes.INTEGER
+    },
+    power: {
+      allowNull: false,
+      defaultValue: 10,
+      type: DataTypes.INTEGER
+    },
+    speed: {
+      allowNull: false,
+      defaultValue: 10,
+      type: DataTypes.INTEGER
+    },
+    score: {
+      allowNull: false,
+      defaultValue: 10,
+      type: DataTypes.INTEGER
+    },
+    role: {
+      allowNull: false,
+      defaultValue: 'mob',
+      type: DataTypes.TEXT
+    },
+    image: {
+      allowNull: false,
+      type: DataTypes.TEXT
+    },
   }, {
     sequelize,
     modelName: 'Monster',

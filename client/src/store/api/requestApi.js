@@ -1,7 +1,11 @@
 import axios from 'axios';
 
-axios.withCredentials = true;
-axios.interceptors.request.use((config) => {
+const api = axios.create({
+  withCredentials: true,
+  baseURL: process.env.REACT_APP_URL_API
+})
+
+api.interceptors.request.use((config) => {
   return config
 }, async (error) => {
   const originalRequest = error.config;
@@ -22,7 +26,6 @@ export async function fetchData({
   url,
   method = 'GET',
   data,
-  params,
   baseURL = process.env.REACT_APP_URL_API
 }) {
   if (!url) return;
@@ -30,19 +33,13 @@ export async function fetchData({
   const headers = {};
 
   headers['Content-Type'] = 'application/json';
-  headers["Access-Control-Allow-Origin"] = '*'
 
-  // headers['Authorization'] = `Bearer ${localStorage.getItem('token')}`;
-
-
-  return await axios({
+  return await api({
     baseURL,
     method,
     url,
     data,
     headers,
-    params,
     withCredentials: true,
-    credentials: 'include'
   });
 }

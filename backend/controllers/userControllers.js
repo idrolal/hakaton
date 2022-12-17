@@ -53,6 +53,17 @@ async function refreshToken(req, res, next) {
 
 async function getUser(req, res, next){
   try {
+    let user = await User.update({userName:req.body.userName},{
+      where: {id:req.body.id}
+    });
+    res.json(user.userName)
+  } catch (error) {
+    next(error)
+  }
+}
+
+async function updateUser(req, res, next){
+  try {
     let users = await User.findAll({
       attributes: {
         exclude: ['password'],
@@ -89,5 +100,8 @@ module.exports = {
   logout,
   refreshToken,
   getUser,
-  getCharacter
+  getCharacter,
+  updateUser
 }
+
+

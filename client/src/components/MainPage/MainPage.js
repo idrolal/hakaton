@@ -7,8 +7,8 @@ function MainPage() {
   return (
     <div>
       <h2>Welcome to the Game</h2>
-      <button type="button">Регистрация</button>
-      <button type="button">Вход</button>
+      <button type="button" onClick={()=> navigate('/signup')}>Регистрация</button>
+      <button type="button" onClick={()=> navigate('/login')}>Вход</button>
       <button type="button" onClick={()=> navigate('/info')}>Информация об игре</button>
     </div>
   );

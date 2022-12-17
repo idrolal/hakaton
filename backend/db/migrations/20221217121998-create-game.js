@@ -11,11 +11,13 @@ module.exports = {
       },
       points: {
         allowNull: false,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        defaultValue: 0
       },
       levelId: {
         allowNull: false,
         type: Sequelize.INTEGER,
+        defaultValue: 1,
         references: {
           model: 'Levels',
           key: 'id',
@@ -30,7 +32,7 @@ module.exports = {
         },
       },
       lastLevel: {
-        allowNull: false,
+        allowNull: true,
         type: Sequelize.INTEGER
       },
       createdAt: {
