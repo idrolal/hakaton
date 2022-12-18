@@ -5,7 +5,7 @@ import ProfilePage from './components/Profile/Profile';
 import InfoPage from './components/InfoPage/InfoPage';
 import MainPage from './components/MainPage/MainPage';
 import ChoiceCharacter from './components/СhoiceCharacter/ChoiceCharacter';
-import { REQUEST_GET_ALL_USER } from './store/user/user.type';
+import { REQUEST_ADD_TOKEN, REQUEST_GET_ALL_USER } from './store/user/user.type';
 
 import React from 'react'
 import SingUp from './components/Layout/SingUp';
@@ -16,6 +16,11 @@ import Game from './components/Game/Game';
 function App() {
 
   const dispatch = useDispatch();
+  useEffect(()=> {
+    if(localStorage.getItem('token')) {
+      dispatch({type: REQUEST_ADD_TOKEN})
+    }
+  }, [])
   useEffect(()=>{
     dispatch({type: REQUEST_GET_ALL_USER})
   }, [])
