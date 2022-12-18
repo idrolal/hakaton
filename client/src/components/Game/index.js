@@ -343,3 +343,214 @@ function spawnPowerUps() {
 
 
 
+function createScoreLabel(projectile, score) {
+  const scoreLabel = document.createElement('label')
+  scoreLabel.innerHTML = score
+  scoreLabel.style.position = 'absolute'
+  scoreLabel.style.color = 'white'
+  scoreLabel.style.userSelect = 'none'
+  scoreLabel.style.left = projectile.x + 'px'
+  scoreLabel.style.top = projectile.y + 'px'
+  document.body.appendChild(scoreLabel)
+
+  gsap.to(scoreLabel, {
+    opacity: 0,
+    y: -30,
+    duration: 0.75,
+    onComplete: () => {
+      scoreLabel.parentNode.removeChild(scoreLabel)
+    }
+  })
+}
+
+let animationId
+let score = 0
+let frame = 0
+function animate() {
+  animationId = requestAnimationFrame(animate)
+  frame++
+  c.fillStyle = 'rgba(0, 0, 0, 0.1)'
+  c.fillRect(0, 0, canvas.width, canvas.height)
+
+  if (frame % 70 === 0) spawnEnemies()
+  if (frame % 300 === 0) spawnPowerUps()
+
+  backgroundParticles.forEach((backgroundParticle) => {
+    const dist = Math.hypot(
+      player.x - backgroundParticle.x,
+      player.y - backgroundParticle.y
+    )
+
+    const hideRadius = 100
+    if (dist < hideRadius) {
+      if (dist < 70) {
+        backgroundParticle.alpha = 0
+      } else {
+        backgroundParticle.alpha = 0.5
+      }
+    } else if (
+      dist >= hideRadius &&
+      backgroundParticle.alpha < backgroundParticle.initialAlpha
+    ) {
+      backgroundParticle.alpha += 0.01
+    } else if (
+      dist >= hideRadius &&
+      backgroundParticle.alpha > backgroundParticle.initialAlpha
+    ) {
+      backgroundParticle.alpha -= 0.01
+    }
+
+    backgroundParticle.update()
+  })
+
+  player.update()
+  particles.forEach((particle, index) => {
+    if (particle.alpha <= 0) {
+      particles.splice(index, 1)
+    } else {
+      particle.update()
+    }
+  })
+
+  if (player.powerUp === 'Automatic' && mouse.down) {
+    if (frame % 4 === 0) {
+      player.shoot(mouse, '#FFF500')
+    }
+  }
+
+  powerUps.forEach((powerUp, index) => {
+    const dist = Math.hypot(player.x - powerUp.x, player.y - powerUp.y)
+
+    // obtain power up
+    // gain the automatic shooting ability
+    if (dist - player.radius - powerUp.width / 2 < 1) {
+      player.color = '#FFF500'
+      player.powerUp = 'Automatic'
+      powerUps.splice(index, 1)
+
+      obtainPowerUpAudio.play()
+
+      setTimeout(() => {
+        player.powerUp = null
+        player.color = '#FFFFFF'
+      }, 5000)
+    } else {
+      powerUp.update()
+    }
+  })
+
+  projectiles.forEach((projectile, index) => {
+    projectile.update()
+
+    // remove from edges of screen
+    if (
+      projectile.x + projectile.radius < 0 ||
+      projectile.x - projectile.radius > canvas.width ||
+      projectile.y + projectile.radius < 0 ||
+      projectile.y - projectile.radius > canvas.height
+    ) {
+      setTimeout(() => {
+        projectiles.splice(index, 1)
+      }, 0)
+    }
+  })
+
+  enemies.forEach((enemy, index) => {
+    enemy.update()
+
+    const dist = Math.hypot(player.x - enemy.x, player.y - enemy.y)
+
+    // end game
+    if (dist - enemy.radius - player.radius < 1) {
+      cancelAnimationFrame(animationId)
+      modalEl.style.display = 'flex'
+      bigScoreEl.innerHTML = score
+      endGameAudio.play()
+      scene.active = false
+
+      gsap.to('#whiteModalEl', {
+        opacity: 1,
+        scale: 1,
+        duration: 0.45,
+        ease: 'expo'
+      })
+    }
+
+    projectiles.forEach((projectile, projectileIndex) => {
+      const dist = Math.hypot(projectile.x - enemy.x, projectile.y - enemy.y)
+
+      // hit enemy
+      // when projectiles touch enemy
+      if (dist - enemy.radius - projectile.radius < 0.03) {
+        // create explosions
+        for (let i = 0; i < enemy.radius * 2; i++) {
+          particles.push(
+            new Particle(
+              projectile.x,
+              projectile.y,
+              Math.random() * 2,
+              enemy.color,
+              {
+                x: (Math.random() - 0.5) * (Math.random() * 6),
+                y: (Math.random() - 0.5) * (Math.random() * 6)
+              }
+            )
+          )
+        }
+
+        // shrink enemy
+        if (enemy.radius - 10 > 5) {
+          enemyHitAudio.play()
+
+          // increase our score
+          score += 100
+          scoreEl.innerHTML = score
+
+          createScoreLabel(projectile, 100)
+
+          gsap.to(enemy, {
+            radius: enemy.radius - 10
+          })
+          setTimeout(() => {
+            projectiles.splice(projectileIndex, 1)
+          }, 0)
+        } else {
+          // eliminate enemy
+          enemyEliminatedAudio.play()
+
+          // remove from scene altogether
+          score += 250
+          scoreEl.innerHTML = score
+          createScoreLabel(projectile, 250)
+
+          // change backgroundParticle colors
+          backgroundParticles.forEach((backgroundParticle) => {
+            backgroundParticle.color = enemy.color
+            gsap.to(backgroundParticle, {
+              alpha: 0.5,
+              duration: 0.015,
+              onComplete: () => {
+                gsap.to(backgroundParticle, {
+                  alpha: backgroundParticle.initialAlpha,
+                  duration: 0.03
+                })
+              }
+            })
+          })
+
+          setTimeout(() => {
+            const enemyFound = enemies.find((enemyValue) => {
+              return enemyValue === enemy
+            })
+
+            if (enemyFound) {
+              enemies.splice(index, 1)
+              projectiles.splice(projectileIndex, 1)
+            }
+          }, 0)
+        }
+      }
+    })
+  })
+}
+
