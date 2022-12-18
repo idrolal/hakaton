@@ -4,14 +4,15 @@ import styled from 'styled-components';
 import { keyframes } from "styled-components";
 import monster from "../../images/monster.gif"
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { REQUEST_GET_ALL_USER } from '../../store/user/user.type';
 
 
 function MainPage() {
-   const navigate = useNavigate()
+  const navigate = useNavigate();
+  const { user } = useSelector(state => state.user);
 
-   const parentStyle = {
+  const parentStyle = {
     display: "flex",
   };
 
@@ -19,39 +20,48 @@ function MainPage() {
     flex: "1",
     margin: "90px"
   };
- 
+
 
   const dispatch = useDispatch();
-  useEffect(()=>{
-    dispatch({type: REQUEST_GET_ALL_USER})
+  useEffect(() => {
+    dispatch({ type: REQUEST_GET_ALL_USER })
   }, [])
   return (
     <div className="App">
       <header className="App-header">
         <p>
-        <AnimatedGradientText>Welcome to the Game</AnimatedGradientText>
+          <AnimatedGradientText>Welcome to the Game</AnimatedGradientText>
         </p>
-      <div style={parentStyle}>
-        <div style={childStyle} >
-        <img src={monster} alt="monster" width="600" height="600"/>
-        </div>
-        <div style={childStyle} >
-          <br/>
-          <div style={{backgroundColor:"w"}}>
-          <p style={{"color":"#D29770","fontSize":"40px"}}
-          onClick={()=> navigate('/signup')}>
-          <AnimatedGradientText> Регистрация</AnimatedGradientText>
-          </p>
+        <div style={parentStyle}>
+          <div style={childStyle} >
+            <img src={monster} alt="monster" width="600" height="600" />
           </div>
-          <br/>
-          <p style={{"color":"#D29770","fontSize":"40px" }}
-          onClick={()=> navigate('/login')}><AnimatedGradientText> Вход</AnimatedGradientText>
-          </p>
-          <br/>
-          <p style={{"color":"#D29770","fontSize":"40px"}}
-          onClick={()=> navigate('/info')}><AnimatedGradientText> Информация об игре</AnimatedGradientText>
-          </p>
-        </div>
+          <div style={childStyle} >
+            <br />
+            {user ? (<div style={{ backgroundColor: "w" }}>
+              <p style={{ "color": "#D29770", "fontSize": "40px" }}
+                onClick={() => navigate('/game')}>
+                <AnimatedGradientText> Начать игру</AnimatedGradientText>
+              </p>
+            </div>) :
+              (
+                <>
+                  <div style={{ backgroundColor: "w" }}>
+                    <p style={{ "color": "#D29770", "fontSize": "40px" }}
+                      onClick={() => navigate('/signup')}>
+                      <AnimatedGradientText> Регистрация</AnimatedGradientText>
+                    </p>
+                  </div>
+                  <br />
+                  <p style={{ "color": "#D29770", "fontSize": "40px" }}
+                    onClick={() => navigate('/login')}><AnimatedGradientText> Вход</AnimatedGradientText>
+                  </p></>
+              )}
+            <br />
+            <p style={{ "color": "#D29770", "fontSize": "40px" }}
+              onClick={() => navigate('/info')}><AnimatedGradientText> Информация об игре</AnimatedGradientText>
+            </p>
+          </div>
         </div>
       </header>
     </div>
