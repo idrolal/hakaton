@@ -1,6 +1,6 @@
 import { call, put, takeEvery } from 'redux-saga/effects';
 import { fetchData } from '../api/requestApi';
-import { GET_USERS, SINGUP } from '../api/user.api';
+import { GET_USERS } from '../api/user.api';
 import { errorUser, successAddUser, successGetAllUsers } from './user.actions';
 import { REQUEST_ADD_USER, REQUEST_GET_ALL_USER } from './user.type';
 

@@ -1,4 +1,4 @@
-import React, { Component }  from 'react'
+import React  from 'react'
 import styled from 'styled-components';
 import { keyframes } from "styled-components";
 import monster2 from "../../images/monster2.gif"

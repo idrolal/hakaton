@@ -7,8 +7,7 @@ import MainPage from './components/MainPage/MainPage';
 import ChoiceCharacter from './components/СhoiceCharacter/ChoiceCharacter';
 import { REQUEST_GET_ALL_USER } from './store/user/user.type';
 
-import React, { Component }  from 'react'
-
+import React from 'react'
 import SingUp from './components/Layout/SingUp';
 import Login from './components/Layout/Login';
 import Game from './components/Game/Game';
