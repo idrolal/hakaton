@@ -13,7 +13,6 @@ router.post('/login', userController.login);
 router.post('/logout', userController.logout);
 router.get('/refresh', userController.refreshToken);
 router.get('/',  userController.getUser);
-router.get('/user/refresh', userController.refreshToken);
 router.get('/game', userController.getCharacter);
 router.put('/update', userController.updateUser)
 

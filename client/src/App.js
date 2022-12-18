@@ -16,11 +16,11 @@ import Game from './components/Game/Game';
 function App() {
 
   const dispatch = useDispatch();
-  useEffect(()=> {
-    if(localStorage.getItem('token')) {
-      dispatch({type: REQUEST_ADD_TOKEN})
-    }
-  }, [])
+  // useEffect(()=> {
+  //   if(localStorage.getItem('token')) {
+  //     dispatch({type: REQUEST_ADD_TOKEN})
+  //   }
+  // }, [])
   useEffect(()=>{
     dispatch({type: REQUEST_GET_ALL_USER})
   }, [])

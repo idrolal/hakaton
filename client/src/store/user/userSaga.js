@@ -33,12 +33,13 @@ function* addUser({ payload, url }) {
 function* getToken({ payload, url }) {
   try {
     const { data } = yield call(fetchData, {
-      url,
+      url: '/user/refresh',
       method: "get",
-      data: payload
     })
     localStorage.setItem('token', data.accessToken);
+    console.log(data);
     yield put(successAddUser(data))
+    
   } catch (error) {
 
   }

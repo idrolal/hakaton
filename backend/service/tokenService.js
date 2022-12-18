@@ -43,8 +43,8 @@ function generateToken(user) {
 async function saveToken(userId, refreshToken) {
   const tokenData = await Token.findOne({ where: { userId } });
   if (tokenData) {
-    tokenData.refreshToken = refreshToken;
-    return await tokenData.save();
+    tokenData.update({refreshToken});
+    return await tokenData;
   }
   const token = await Token.create({
     userId,

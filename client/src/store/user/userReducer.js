@@ -14,10 +14,6 @@ export const userReducer = (state = initialState, action) => {
       return {
         ...state, user: action.payload
       }
-      case REQUEST_ADD_TOKEN:
-      return {
-        ...state, user: action.payload
-      }
     default:
       return state;
   }
