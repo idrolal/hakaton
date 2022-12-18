@@ -1,7 +1,7 @@
 import { SUCCESS_ADD_USER, REQUEST_ERROR, REQUEST_ADD_TOKEN } from "./user.type";
 
 const initialState = {
-  user: {},
+  user: null,
   error: null
 };
 
